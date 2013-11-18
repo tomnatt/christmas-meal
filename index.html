@@ -77,16 +77,31 @@ $.getJSON("data.json", function(data) {
         .attr("x2", width / 2)
         .attr("y2", height);
 
+    // starters
     var starter_values = Object.keys(starter).map(function(v) { return starter[v]; });
-    var starter_height = 0;
+    var starter_height_left = 50;
+    var starter_height_right = 50;
     var starter_circles = chart.selectAll("circle")
         .data(starter_values)
         .enter().append("circle")
-        .attr("cx", function(d, i) { return width / 2; })
+        .attr("cx", function(d, i) { 
+            if (i % 2 == 0) {
+                return (width / 2) - (d * 10);
+            } else {
+                return (width / 2) + (d * 10);
+            }
+            
+        })
         .attr("cy", function(d, i) { 
-            var h = starter_height + (d * 10);
-            starter_height = starter_height + (d * 10 * 2);
-            return h;
+            if (i % 2 == 0) {
+                var h = starter_height_left + (d * 10);
+                starter_height_left = starter_height_left + (d * 10 * 2);
+                return h;
+            } else {
+                var h = starter_height_right + (d * 10);
+                starter_height_right = starter_height_right + (d * 10 * 2);
+                return h;
+            }
         })
         .attr("r", function(d, i) { return d * 10; });
 
