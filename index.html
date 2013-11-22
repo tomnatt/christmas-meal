@@ -87,7 +87,7 @@ $.getJSON("data.json", function(data) {
         .attr("y2", height);
 
     // starters
-    var starter_values = Object.keys(starter).map(function(v) { return starter[v]; });
+    var starter_values = Object.keys(starter).map(function(v) { return starter[v]; }).sort(function(a,b){return b-a});
     var starter_circles = chart.selectAll("circle.starter")
         .data(starter_values)
         .enter().append("circle")
@@ -118,7 +118,7 @@ $.getJSON("data.json", function(data) {
     circle_height_right = circle_height_left + right_offset;
 
     // mains
-    var main_values = Object.keys(main).map(function(v) { return main[v]; });
+    var main_values = Object.keys(main).map(function(v) { return main[v]; }).sort(function(a,b){return b-a});
     var main_circles = chart.selectAll("circle.main")
         .data(main_values)
         .enter().append("circle")
@@ -149,7 +149,7 @@ $.getJSON("data.json", function(data) {
     circle_height_right = circle_height_left + right_offset;
 
     // desserts
-    var dessert_values = Object.keys(dessert).map(function(v) { return dessert[v]; });
+    var dessert_values = Object.keys(dessert).map(function(v) { return dessert[v]; }).sort(function(a,b){return b-a});
     var dessert_circles = chart.selectAll("circle.dessert")
         .data(dessert_values)
         .enter().append("circle")
