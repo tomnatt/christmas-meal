@@ -53,6 +53,12 @@
             "starter": "Mackerel salad",
             "main": "Duck breast",
             "dessert": "Chocolate ganache"
+        },
+        {
+            "name": "Justin",
+            "starter": "Goat's cheese",
+            "main": "Beef shin",
+            "dessert": "Caramel pannacotta"
         }
     ]
 }
