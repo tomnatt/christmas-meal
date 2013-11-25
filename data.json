@@ -59,6 +59,12 @@
             "starter": "Goat's cheese",
             "main": "Beef shin",
             "dessert": "Caramel pannacotta"
+        },
+        {
+            "name": "Dan",
+            "starter": "Venison carpaccio",
+            "main": "Beef shin",
+            "dessert": "Caramel pannacotta"
         }
     ]
 }
