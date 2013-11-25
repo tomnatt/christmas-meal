@@ -6,7 +6,6 @@
     border: 1px solid black;
 }
 .chart circle.starter {
-    fill: red;
 }
 .chart circle.main {
     fill: blue;
@@ -111,7 +110,16 @@ $.getJSON("data.json", function(data) {
             }
         })
         .attr("r", function(d, i) { return d * 10; })
+        .attr("fill", "red")
         .attr("class", "starter");
+
+    d3.selectAll("circle.starter").on("mouseover", function() {
+        d3.select(this).transition().duration(500).style("fill", "blue");
+    });
+    d3.selectAll("circle.starter").on("mouseout", function() {
+        d3.select(this).transition().duration(500).style("fill", "red");
+    });
+
 
     // reset for mains
     circle_height_left = Math.max(circle_height_left, circle_height_right) + 50;
