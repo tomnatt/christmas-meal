@@ -47,6 +47,12 @@
             "starter": "Venison carpaccio",
             "main": "Duck breast",
             "dessert": "Orange cake"
+        },
+        {
+            "name": "Phil",
+            "starter": "Mackerel salad",
+            "main": "Duck breast",
+            "dessert": "Chocolate ganache"
         }
     ]
 }
