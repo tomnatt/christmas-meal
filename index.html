@@ -95,18 +95,13 @@
     border: 1px solid black;
     width: 900px;
     height: 530px;
+    background:url('WinterChristmasSceneVectorIllustration2.jpg') no-repeat;
 }
 .chart circle.starter {
 }
 .chart circle.main {
-    fill: blue;
 }
 .chart circle.dessert {
-    fill: green;
-}
-
-line.guide {
-    stroke: black;
 }
 
 </style>
@@ -118,9 +113,18 @@ var starter = {};
 var main = {};
 var dessert = {};
 
-var radius_scale = 4;
-var starter_x = 162;
-var starter_y = 388;
+// scaling
+var radius_scale = 5;
+// starter berries position
+var starter_x = 170;
+var starter_y = 380;
+// main berries position
+var main_x = 375;
+var main_y = 295;
+// dessert berries position
+var dessert_x = 550;
+var dessert_y = 180;
+
 var chart = d3.select(".chart");
 
 $.getJSON("data.json", function(data) {
@@ -152,116 +156,76 @@ $.getJSON("data.json", function(data) {
     });
 
     // map
-    // console.log(starter);
+    console.log(starter);
     // keys
     // console.log(Object.keys(starter));
     // values
 
     // starters
     var starter_values = Object.keys(starter).map(function(v) { return starter[v]; });
+    var starter_max = Math.max.apply(Math, starter_values);
     var starter_circles = chart.selectAll("circle.starter")
         .data(starter_values)
         .enter().append("circle")
         // this is a cheat which will only work for up to 4 elements
         .attr("cx", function(d, i) { 
-            switch (i) {
-                case 0:
-                    return starter_x - d * radius_scale;
-                case 1: 
-                    return starter_x - d * radius_scale;
-                case 2:
-                    return starter_x + d * radius_scale;
-                case 3:
-                    return starter_x + d * radius_scale;
-            }
+            var x_shift = Math.sin(i * (2 * Math.PI / starter_values.length)) * (starter_max * radius_scale);
+            return starter_x + x_shift;
         })
         .attr("cy", function(d, i) { 
-            switch (i) {
-                case 0:
-                    return starter_y - d * radius_scale;
-                case 1: 
-                    return starter_y + d * radius_scale;
-                case 2:
-                    return starter_y + d * radius_scale;
-                case 3:
-                    return starter_y - d * radius_scale;
-            }
+            var y_shift = Math.cos(i * (2 * Math.PI / starter_values.length)) * (starter_max * radius_scale);
+            return starter_y + y_shift;
         })
         .attr("r", function(d, i) { return d * radius_scale; })
         .attr("fill", "red")
         .attr("class", "starter");
 
-    d3.selectAll("circle.starter").on("mouseover", function() {
-        d3.select(this).transition().duration(500).style("fill", "blue");
-    });
-    d3.selectAll("circle.starter").on("mouseout", function() {
-        d3.select(this).transition().duration(500).style("fill", "red");
-    });
-
-/*
-    // reset for mains
-    circle_height_left = Math.max(circle_height_left, circle_height_right) + 50;
-    circle_height_right = circle_height_left + right_offset;
-
     // mains
-    var main_values = Object.keys(main).map(function(v) { return main[v]; }).sort(function(a,b){return b-a});
+    var main_values = Object.keys(main).map(function(v) { return main[v]; });
+    var main_max = Math.max.apply(Math, main_values);
     var main_circles = chart.selectAll("circle.main")
         .data(main_values)
         .enter().append("circle")
         .attr("cx", function(d, i) { 
-            if (i % 2 == 0) {
-                return (width / 2) - (d * 10);
-            } else {
-                return (width / 2) + (d * 10);
-            }
-            
+            var x_shift = Math.sin(i * (2 * Math.PI / starter_values.length)) * (main_max * radius_scale);
+            return main_x + x_shift;
         })
         .attr("cy", function(d, i) { 
-            if (i % 2 == 0) {
-                var h = circle_height_left + (d * 10);
-                circle_height_left = circle_height_left + (d * 10 * 2);
-                return h;
-            } else {
-                var h = circle_height_right + (d * 10);
-                circle_height_right = circle_height_right + (d * 10 * 2);
-                return h;
-            }
+            var y_shift = Math.cos(i * (2 * Math.PI / starter_values.length)) * (main_max * radius_scale);
+            return main_y + y_shift;
         })
-        .attr("r", function(d, i) { return d * 10; })
+        .attr("r", function(d, i) { return d * radius_scale; })
+        .attr("fill", "red")
         .attr("class", "main");
 
-    // reset for dessert
-    circle_height_left = Math.max(circle_height_left, circle_height_right) + 50;
-    circle_height_right = circle_height_left + right_offset;
-
     // desserts
-    var dessert_values = Object.keys(dessert).map(function(v) { return dessert[v]; }).sort(function(a,b){return b-a});
+    var dessert_values = Object.keys(dessert).map(function(v) { return dessert[v]; });
+    var dessert_max = Math.max.apply(Math, main_values);
     var dessert_circles = chart.selectAll("circle.dessert")
         .data(dessert_values)
         .enter().append("circle")
         .attr("cx", function(d, i) { 
-            if (i % 2 == 0) {
-                return (width / 2) - (d * 10);
-            } else {
-                return (width / 2) + (d * 10);
-            }
-            
+            var x_shift = Math.sin(i * (2 * Math.PI / starter_values.length)) * (dessert_max * radius_scale);
+            return dessert_x + x_shift;
         })
         .attr("cy", function(d, i) { 
-            if (i % 2 == 0) {
-                var h = circle_height_left + (d * 10);
-                circle_height_left = circle_height_left + (d * 10 * 2);
-                return h;
-            } else {
-                var h = circle_height_right + (d * 10);
-                circle_height_right = circle_height_right + (d * 10 * 2);
-                return h;
-            }
+            var y_shift = Math.cos(i * (2 * Math.PI / starter_values.length)) * (dessert_max * radius_scale);
+            return dessert_y + y_shift;
         })
-        .attr("r", function(d, i) { return d * 10; })
+        .attr("r", function(d, i) { return d * radius_scale; })
+        .attr("fill", "red")
         .attr("class", "dessert");
-*/
+
+    d3.selectAll("circle").on("mouseover", function() {
+        d3.select(this).transition().duration(250).style("fill", "#ff7709");
+    });
+    d3.selectAll("circle").on("mouseout", function() {
+        d3.select(this).transition().duration(500).style("fill", "red");
+    });
+
+    // document loaded - could make the berries pulse?
 });
+
 
 </script>
 </body>
