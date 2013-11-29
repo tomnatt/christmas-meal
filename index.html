@@ -109,10 +109,6 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script>
 
-var starter = {};
-var main = {};
-var dessert = {};
-
 // scaling
 var radius_scale = 5;
 // starter berries position
@@ -125,6 +121,9 @@ var main_y = 295;
 var dessert_x = 550;
 var dessert_y = 180;
 
+var starter = {};
+var main = {};
+var dessert = {};
 var chart = d3.select(".chart");
 
 $.getJSON("data.json", function(data) {
@@ -134,87 +133,40 @@ $.getJSON("data.json", function(data) {
         
         // starters
         if (v["starter"] in starter) {
-            starter[v["starter"]]++;
+            starter[v["starter"]].push(v["name"]);
         } else {
-            starter[v["starter"]] = 1;
+            starter[v["starter"]] = [v["name"]];
         }
 
         // mains
         if (v["main"] in main) {
-            main[v["main"]]++;
+            main[v["main"]].push(v["name"]);
         } else {
-            main[v["main"]] = 1;
+            main[v["main"]] = [v["name"]];
         }
 
         // desserts
         if (v["dessert"] in dessert) {
-            dessert[v["dessert"]]++;
+            dessert[v["dessert"]].push(v["name"]);
         } else {
-            dessert[v["dessert"]] = 1;
+            dessert[v["dessert"]] = [v["name"]];
         }
 
     });
 
     // map
-    console.log(starter);
+    // console.log(starter);
+    // console.log(main);
+    // console.log(dessert);
     // keys
     // console.log(Object.keys(starter));
     // values
 
     // starters
-    var starter_values = Object.keys(starter).map(function(v) { return starter[v]; });
-    var starter_max = Math.max.apply(Math, starter_values);
-    var starter_circles = chart.selectAll("circle.starter")
-        .data(starter_values)
-        .enter().append("circle")
-        // this is a cheat which will only work for up to 4 elements
-        .attr("cx", function(d, i) { 
-            var x_shift = Math.sin(i * (2 * Math.PI / starter_values.length)) * (starter_max * radius_scale);
-            return starter_x + x_shift;
-        })
-        .attr("cy", function(d, i) { 
-            var y_shift = Math.cos(i * (2 * Math.PI / starter_values.length)) * (starter_max * radius_scale);
-            return starter_y + y_shift;
-        })
-        .attr("r", function(d, i) { return d * radius_scale; })
-        .attr("fill", "red")
-        .attr("class", "starter");
+    createBerries("starter", starter_x, starter_y, starter);
+    createBerries("main", main_x, main_y, main);
+    createBerries("dessert", dessert_x, dessert_y, dessert);
 
-    // mains
-    var main_values = Object.keys(main).map(function(v) { return main[v]; });
-    var main_max = Math.max.apply(Math, main_values);
-    var main_circles = chart.selectAll("circle.main")
-        .data(main_values)
-        .enter().append("circle")
-        .attr("cx", function(d, i) { 
-            var x_shift = Math.sin(i * (2 * Math.PI / starter_values.length)) * (main_max * radius_scale);
-            return main_x + x_shift;
-        })
-        .attr("cy", function(d, i) { 
-            var y_shift = Math.cos(i * (2 * Math.PI / starter_values.length)) * (main_max * radius_scale);
-            return main_y + y_shift;
-        })
-        .attr("r", function(d, i) { return d * radius_scale; })
-        .attr("fill", "red")
-        .attr("class", "main");
-
-    // desserts
-    var dessert_values = Object.keys(dessert).map(function(v) { return dessert[v]; });
-    var dessert_max = Math.max.apply(Math, main_values);
-    var dessert_circles = chart.selectAll("circle.dessert")
-        .data(dessert_values)
-        .enter().append("circle")
-        .attr("cx", function(d, i) { 
-            var x_shift = Math.sin(i * (2 * Math.PI / starter_values.length)) * (dessert_max * radius_scale);
-            return dessert_x + x_shift;
-        })
-        .attr("cy", function(d, i) { 
-            var y_shift = Math.cos(i * (2 * Math.PI / starter_values.length)) * (dessert_max * radius_scale);
-            return dessert_y + y_shift;
-        })
-        .attr("r", function(d, i) { return d * radius_scale; })
-        .attr("fill", "red")
-        .attr("class", "dessert");
 
     d3.selectAll("circle").on("mouseover", function() {
         d3.select(this).transition().duration(250).style("fill", "#ff7709");
@@ -223,22 +175,45 @@ $.getJSON("data.json", function(data) {
         d3.select(this).transition().duration(500).style("fill", "red");
     });
 
-    // document loaded - could make the berries pulse?
+    // document loaded - anything else fun?
 
     // 3 random berries flash every 5 seconds
     setInterval(function() {
         berryPulse();
         setTimeout(berryPulse, 500);
         setTimeout(berryPulse, 1000);
-
     }, 5000);
 
 });
 
+function createBerries(course, course_x, course_y, course_data) {
+
+    // pull out the needed data
+    var course_keys = Object.keys(course_data);
+    var course_values = Object.keys(course_data).map(function(v) { return course_data[v].length; });
+    var max_course_value = Math.max.apply(Math, course_values);
+
+    var circles = chart.selectAll("circle."+course)
+        .data(course_keys)
+        .enter().append("circle")
+        // space the circles around a point
+        .attr("cx", function(d, i) { 
+            var x_shift = Math.sin(i * (2 * Math.PI / course_keys.length)) * (max_course_value * radius_scale);
+            return course_x + x_shift;
+        })
+        .attr("cy", function(d, i) { 
+            var y_shift = Math.cos(i * (2 * Math.PI / course_keys.length)) * (max_course_value * radius_scale);
+            return course_y + y_shift;
+        })
+        .attr("r", function(d, i) { return course_data[d].length * radius_scale; })
+        .attr("fill", "red")
+        .attr("id", function(d, i) { return course + "_" + d.replace(/ /g,"_").toLowerCase(); })
+        .attr("class", course);
+}
+
 function berryPulse() {
     var circles = d3.selectAll("circle");
     var i = Math.floor(Math.random() * circles[0].length);
-    console.log(i);
     d3.select(circles[0][i]).transition().duration(250).style("fill", "#ff7709")
          .transition().duration(500).style("fill", "red");
 }
