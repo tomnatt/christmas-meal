@@ -89,6 +89,8 @@
            id="path7-1"
            inkscape:connector-curvature="0" /></g></g></g></svg>
 
+<div id="course_information"></div>
+
 <style>
 
 .chart {
@@ -97,11 +99,11 @@
     height: 530px;
     background:url('WinterChristmasSceneVectorIllustration2.jpg') no-repeat;
 }
-.chart circle.starter {
+.chart circle {
+    cursor: pointer;
 }
-.chart circle.main {
-}
-.chart circle.dessert {
+.food_info {
+    display: none;
 }
 
 </style>
@@ -154,28 +156,22 @@ $.getJSON("data.json", function(data) {
 
     });
 
-    // map
-    // console.log(starter);
-    // console.log(main);
-    // console.log(dessert);
-    // keys
-    // console.log(Object.keys(starter));
-    // values
-
-    // starters
     createBerries("starter", starter_x, starter_y, starter);
+    addCourseDataToPage(starter);
+
     createBerries("main", main_x, main_y, main);
+    addCourseDataToPage(main);
+
     createBerries("dessert", dessert_x, dessert_y, dessert);
+    addCourseDataToPage(dessert);
 
-
+    // enable colour on mouseover
     d3.selectAll("circle").on("mouseover", function() {
         d3.select(this).transition().duration(250).style("fill", "#ff7709");
     });
     d3.selectAll("circle").on("mouseout", function() {
         d3.select(this).transition().duration(500).style("fill", "red");
     });
-
-    // document loaded - anything else fun?
 
     // 3 random berries flash every 5 seconds
     setInterval(function() {
@@ -193,7 +189,7 @@ function createBerries(course, course_x, course_y, course_data) {
     var course_values = Object.keys(course_data).map(function(v) { return course_data[v].length; });
     var max_course_value = Math.max.apply(Math, course_values);
 
-    var circles = chart.selectAll("circle."+course)
+    var circles = chart.selectAll("circle." + course)
         .data(course_keys)
         .enter().append("circle")
         // space the circles around a point
@@ -209,6 +205,30 @@ function createBerries(course, course_x, course_y, course_data) {
         .attr("fill", "red")
         .attr("id", function(d, i) { return course + "_" + d.replace(/ /g,"_").toLowerCase(); })
         .attr("class", course);
+}
+
+function addCourseDataToPage(course_data) {
+
+    $.each(Object.keys(course_data), function(key, noms) {
+
+        // the people who ordered it
+        var people = "";
+        $.each(course_data[noms], function(key, person) {
+            people += "<li>" + person + "</li>";
+        });
+
+        // the display
+        var html = "<div class=\"food_info\">" 
+                    + "<h3>" + noms + "</h3>"
+                    + "<ul>"
+                    + people
+                    + "</ul>"
+                    + "</div>";
+
+        // add it
+        $("#course_information").after(html);
+    });
+
 }
 
 function berryPulse() {
