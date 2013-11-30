@@ -1,0 +1,27 @@
+@import url(http://fonts.googleapis.com/css?family=Mountains+of+Christmas);
+
+.chart {
+    border: 1px solid black;
+    width: 900px;
+    height: 530px;
+    background:url('WinterChristmasSceneVectorIllustration2.jpg') no-repeat;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.chart circle {
+    cursor: pointer;
+}
+.food_info {
+    font-family: "Mountains of Christmas", sans-serif;
+    font-size: 20px;
+    display: none;
+    background-color: red;
+    border: thin black solid;
+    margin-left: 3px;
+    padding: 0 10px;
+    position: absolute;
+}
+.food_info h3 {
+    margin-top: 10px;
+}
