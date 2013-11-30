@@ -2,6 +2,9 @@
 
 body {
     background-color: #28245f;
+    font-family: "Mountains of Christmas", sans-serif;
+    font-weight: bold;
+    letter-spacing: 2px;
 }
 .chart {
     width: 900px;
@@ -15,10 +18,8 @@ body {
 .chart circle {
     cursor: pointer;
 }
+
 .food_info {
-    font-family: "Mountains of Christmas", sans-serif;
-    font-weight: bold;
-    letter-spacing: 2px;
     font-size: 20px;
     display: none;
     background-color: red;
@@ -27,6 +28,7 @@ body {
     padding: 0 20px;
     position: absolute;
     border-radius: 15px;
+    z-index: 10;
 }
 .food_info h3 {
     font-size: 25px;
@@ -35,4 +37,34 @@ body {
 .food_info ul {
     margin: 0 0 15px;
     list-style: none;
+}
+
+.course_titles .starters {
+    position: absolute;
+    top: 280px;
+    left: 55px;
+    background-color: rgba(190,255,247,0.6);
+    box-shadow: 0 0 5px #000000;
+    padding: 2px 10px;
+    border-radius: 15px;
+    transform: rotate(-26deg);
+}
+.course_titles .mains {
+    position: absolute;
+    top: 340px;
+    left: 355px;
+    background-color: rgba(190,255,247,0.6);
+    box-shadow: 0 0 5px #000000;
+    padding: 2px 10px;
+    border-radius: 15px;
+}
+.course_titles .desserts {
+    position: absolute;
+    top: 269px;
+    left: 535px;
+    background-color: rgba(190,255,247,0.6);
+    box-shadow: 0 0 5px #000000;
+    padding: 2px 10px;
+    border-radius: 15px;
+    transform: rotate(18deg);
 }
