@@ -3,7 +3,7 @@
         {
             "name": "Tom Natt",
             "starter": "Venison carpaccio",
-            "main": "Beef shin",
+            "main": "Beef shin and cep suet pudding",
             "dessert": "Chocolate ganache"
         },
         {
@@ -15,7 +15,7 @@
         {
             "name": "Chris",
             "starter": "Mackerel salad",
-            "main": "Beef shin",
+            "main": "Beef shin and cep suet pudding",
             "dessert": "Caramel pannacotta"
         },
         {
@@ -27,7 +27,7 @@
         {
             "name": "Tom Trentham",
             "starter": "Mackerel salad",
-            "main": "Beef shin",
+            "main": "Beef shin and cep suet pudding",
             "dessert": "Chocolate ganache"
         },
         {
@@ -57,13 +57,13 @@
         {
             "name": "Justin",
             "starter": "Goat's cheese",
-            "main": "Beef shin",
+            "main": "Beef shin and cep suet pudding",
             "dessert": "Caramel pannacotta"
         },
         {
             "name": "Dan",
             "starter": "Venison carpaccio",
-            "main": "Beef shin",
+            "main": "Beef shin and cep suet pudding",
             "dessert": "Caramel pannacotta"
         }
     ]
