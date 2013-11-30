@@ -62,12 +62,13 @@ h1 {
 }
 .course_titles .mains {
     position: absolute;
-    top: 340px;
+    top: 335px;
     left: 355px;
     background-color: rgba(190,255,247,0.6);
     box-shadow: 0 0 5px #000000;
     padding: 2px 10px;
     border-radius: 15px;
+    transform: rotate(-18deg);
 }
 .course_titles .desserts {
     position: absolute;
