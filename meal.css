@@ -6,6 +6,16 @@ body {
     font-weight: bold;
     letter-spacing: 2px;
 }
+h1 {
+    position: absolute;
+    top: 5px;
+    left: 25px;
+    background-color: rgba(190,255,247,0.6);
+    box-shadow: 0 0 5px #000000;
+    padding: 2px 10px;
+    border-radius: 15px;
+}
+
 .chart {
     width: 900px;
     height: 530px;
