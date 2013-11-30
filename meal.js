@@ -56,10 +56,10 @@ $.getJSON("data.json", function(data) {
 
     // 3 random berries flash every 5 seconds
     setInterval(function() {
-        berryPulse();
-        setTimeout(berryPulse, 500);
-        setTimeout(berryPulse, 1000);
-    }, 5000);
+        berryPulse("starter");
+        setTimeout(function() { berryPulse("main"); }, 200);
+        setTimeout(function() { berryPulse("dessert"); }, 400);
+    }, 3000);
 
 });
 
@@ -138,10 +138,10 @@ function enableMouseInteraction() {
 
 }
 
-function berryPulse() {
-    var circles = d3.selectAll("circle");
+function berryPulse(course) {
+    var circles = d3.selectAll("circle." + course);
     var i = Math.floor(Math.random() * circles[0].length);
-    d3.select(circles[0][i]).transition().duration(250).style("fill", "#ff7709")
+    d3.select(circles[0][i]).transition().duration(200).style("fill", "#ff7709")
          .transition().duration(500).style("fill", "red");
 }
 
