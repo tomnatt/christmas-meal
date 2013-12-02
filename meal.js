@@ -139,10 +139,36 @@ function enableMouseInteraction() {
 }
 
 function berryPulse(course) {
+
+    // timings
+    var step = 1000;
+    var space = 100;
+
+    // get a circle at random
     var circles = d3.selectAll("circle." + course);
     var i = Math.floor(Math.random() * circles[0].length);
-    d3.select(circles[0][i]).transition().duration(200).style("fill", "#ff7709")
-         .transition().duration(500).style("fill", "red");
+    var c = d3.select(circles[0][i]);
+
+    // pulse outwards
+    d3.select("svg").append("circle")
+        .attr("r", 0)
+        .attr("id", course + "_pulse")
+        .attr("cx", c.attr("cx"))
+        .attr("cy", c.attr("cy"))
+        .style("fill", "none")
+        .style("stroke", "yellow")
+        .style("stroke-opacity", 1)
+        .style("stroke-width", 5)
+    .transition()
+        .duration(step)
+        .attr("r", parseInt(c.attr("r")) + 15)
+        .style("stroke-opacity", 0);
+
+    // get rid of the extra element
+    setTimeout(function() {
+        d3.select("#" + course + "_pulse").remove();
+    }, step + space);
+
 }
 
 function generateId(data) {
